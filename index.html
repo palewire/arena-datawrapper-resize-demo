@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Arena Datawrapper resize demo</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="assets/resize-demo.js"></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="intro">
+        <h1>One listener, multiple Datawrapper embeds</h1>
+        <p>
+          This page copies Arena's delayed card insertion. A single
+          <code>window.message</code> listener identifies each Reuters-hosted
+          chart by its sending window and sets that iframe's height.
+        </p>
+      </header>
+
+      <section class="testing-panel" aria-labelledby="testing-heading">
+        <h2 id="testing-heading">Try a narrow or wide card</h2>
+        <p>
+          Use these controls, or resize your browser. Watch each card's
+          current height after the embedded chart sends a resize message.
+        </p>
+        <div class="viewport-controls" role="group" aria-label="Demo card width">
+          <button type="button" data-width="narrow" aria-pressed="false">Narrow card</button>
+          <button type="button" data-width="wide" aria-pressed="true">Wide card</button>
+        </div>
+      </section>
+
+      <section class="demo-stage" id="datawrapper-resize-demo" aria-label="Arena card demo">
+        <article class="arena-card">
+          <div class="card-label">
+            <h2>Initial Arena card</h2>
+            <p class="frame-status" data-frame-status="shein" aria-live="polite">
+              Starting height: 450px. Current height: 450px.
+            </p>
+          </div>
+          <iframe
+            class="chart-frame"
+            data-datawrapper-demo
+            data-frame-name="shein"
+            title="Reuters chart about Shein"
+            src="https://www.reuters.com/graphics/MARKETS-AUTOMATED/SHEIN-20260901/znvnowrampl/media-embed.html"
+            width="100%"
+            height="450"
+            loading="lazy"
+          ></iframe>
+        </article>
+
+        <div id="injected-card-anchor" aria-live="polite"></div>
+      </section>
+
+      <aside class="note">
+        <h2>What this demonstrates</h2>
+        <p>
+          Arena can force embeds to <code>min-height: 450px !important</code>.
+          This demo keeps that rule, then applies a more specific correction
+          only inside this prototype so charts can shrink when Datawrapper
+          reports a smaller height.
+        </p>
+        <p id="insertion-status">The second card will be inserted shortly.</p>
+      </aside>
+    </main>
+  </body>
+</html>

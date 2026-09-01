@@ -1,0 +1,154 @@
+:root {
+  color-scheme: light;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  color: #1d2733;
+  background: #f5f7f8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  line-height: 1.5;
+}
+
+button,
+code {
+  font: inherit;
+}
+
+.page-shell {
+  width: min(100% - 2rem, 70rem);
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+
+.intro,
+.testing-panel,
+.note {
+  max-width: 48rem;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0.75rem;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.08;
+}
+
+h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+}
+
+.testing-panel,
+.note {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #c9d2da;
+  border-radius: 0.4rem;
+  background: #fff;
+}
+
+.testing-panel p,
+.note p:last-child {
+  margin-bottom: 0;
+}
+
+.viewport-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+button {
+  min-height: 2.75rem;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid #1d5e94;
+  border-radius: 0.25rem;
+  color: #12476f;
+  background: #fff;
+  cursor: pointer;
+}
+
+button[aria-pressed="true"],
+button:hover {
+  color: #fff;
+  background: #1d5e94;
+}
+
+button:focus-visible {
+  outline: 3px solid #efb700;
+  outline-offset: 2px;
+}
+
+.demo-stage {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+body.viewport-narrow .demo-stage {
+  max-width: 23rem;
+}
+
+.arena-card {
+  overflow: hidden;
+  border: 1px solid #b7c3ce;
+  border-radius: 0.4rem;
+  background: #fff;
+  box-shadow: 0 0.1rem 0.3rem rgb(29 39 51 / 10%);
+}
+
+.card-label {
+  padding: 1rem 1rem 0.8rem;
+  border-bottom: 1px solid #d9e0e5;
+}
+
+.card-label h2 {
+  margin-bottom: 0.35rem;
+  font-size: 1rem;
+}
+
+.frame-status {
+  margin-bottom: 0;
+  color: #3e4c5a;
+  font-size: 0.95rem;
+}
+
+/* This mirrors the broad minimum-height rule applied by Arena page furniture. */
+.arena-card iframe {
+  display: block;
+  min-height: 450px !important;
+  border: 0;
+}
+
+/*
+ * The prototype owns this wrapper. Its more specific rule lets Datawrapper
+ * reduce an iframe after it reports a smaller height.
+ */
+#datawrapper-resize-demo .chart-frame {
+  min-height: 1px !important;
+}
+
+code {
+  padding: 0.08em 0.25em;
+  border-radius: 0.2rem;
+  background: #e9edf0;
+  font-size: 0.92em;
+}
+
+@media (max-width: 40rem) {
+  .page-shell {
+    width: min(100% - 1.25rem, 70rem);
+    padding-top: 1.25rem;
+  }
+}
