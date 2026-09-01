@@ -1,0 +1,484 @@
+:root {
+  color-scheme: light;
+  --ink: #172b36;
+  --muted: #6a7b82;
+  --paper: #f6f8f7;
+  --card: #ffffff;
+  --line: #dbe5e1;
+  --teal: #007f78;
+  --teal-dark: #005f5a;
+  --teal-soft: #e2f1ee;
+  --amber: #b36a25;
+  --amber-soft: #f8ecdd;
+  --shadow: 0 18px 50px rgba(24, 49, 55, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 80% 0%, rgba(198, 225, 218, 0.5), transparent 31rem),
+    var(--paper);
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.5;
+}
+
+main {
+  width: min(100% - 2.5rem, 72rem);
+  margin: 0 auto;
+}
+
+.hero {
+  padding: 7.5rem 0 5rem;
+}
+
+.eyebrow,
+.card-status,
+.control-label,
+.comparison-label,
+.hero-meta,
+.test-button,
+.footer-links {
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  margin: 0 0 1.2rem;
+  color: var(--teal);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 39rem;
+  margin-bottom: 1.5rem;
+  font-size: clamp(3.4rem, 8vw, 6.8rem);
+  letter-spacing: -0.075em;
+  line-height: 0.9;
+}
+
+h1 span {
+  color: var(--teal);
+}
+
+.lede {
+  max-width: 37rem;
+  margin-bottom: 2rem;
+  color: var(--muted);
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.5rem;
+  color: var(--muted);
+  font-size: 0.65rem;
+}
+
+.hero-meta strong {
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+code {
+  padding: 0.15em 0.35em;
+  color: var(--teal-dark);
+  background: var(--teal-soft);
+  border-radius: 0.25rem;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.86em;
+}
+
+.section {
+  margin-bottom: 7rem;
+}
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  margin-bottom: 0;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.section-note {
+  max-width: 15rem;
+  margin-bottom: 0.15rem;
+  color: var(--muted);
+  font-size: 0.94rem;
+  text-align: right;
+}
+
+.control-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  color: var(--ink);
+  background: #e7efec;
+  border: 1px solid var(--line);
+  border-radius: 0.55rem;
+}
+
+.control-label {
+  margin-bottom: 0.25rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.control-copy {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 0.65rem;
+  cursor: pointer;
+}
+
+.switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.switch-track {
+  display: flex;
+  align-items: center;
+  width: 3rem;
+  height: 1.7rem;
+  padding: 0.2rem;
+  background: #a7b8b4;
+  border-radius: 2rem;
+  transition: background 150ms ease;
+}
+
+.switch-track span {
+  width: 1.3rem;
+  height: 1.3rem;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  transition: transform 150ms ease;
+}
+
+.switch input:checked + .switch-track {
+  background: var(--teal);
+}
+
+.switch input:checked + .switch-track span {
+  transform: translateX(1.3rem);
+}
+
+.switch input:focus-visible + .switch-track {
+  outline: 3px solid rgba(0, 127, 120, 0.3);
+  outline-offset: 3px;
+}
+
+.switch-text {
+  min-width: 7.5rem;
+  color: var(--teal-dark);
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.chart-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.chart-card,
+.comparison-card {
+  padding: 1.5rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  box-shadow: var(--shadow);
+}
+
+.card-topline {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.card-number {
+  color: var(--muted);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.78rem;
+}
+
+.card-status {
+  color: var(--amber);
+  font-size: 0.63rem;
+  font-weight: 700;
+}
+
+.card-status[data-status="resized"] {
+  color: var(--teal);
+}
+
+h3 {
+  margin-bottom: 0.25rem;
+  font-size: 1.65rem;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.card-description {
+  min-height: 1.5rem;
+  margin-bottom: 1.25rem;
+  color: var(--muted);
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: 0.78rem;
+}
+
+.frame-shell {
+  overflow: hidden;
+  background: #edf2f0;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+}
+
+.datawrapper-frame {
+  display: block;
+  width: 100%;
+  height: 450px;
+  min-height: 450px !important;
+  border: 0;
+  background: #edf2f0;
+}
+
+.resize-demo .datawrapper-frame.allow-received-height {
+  min-height: 0 !important;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin: 1rem 0 1.25rem;
+}
+
+.metrics div {
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--line);
+}
+
+.metrics dt {
+  color: var(--muted);
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  font-size: 0.63rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.metrics dd {
+  margin: 0.15rem 0 0;
+  color: var(--ink);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.85rem;
+}
+
+.test-button {
+  padding: 0;
+  color: var(--teal-dark);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  font-size: 0.64rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.test-button:hover,
+.test-button:focus-visible {
+  color: var(--amber);
+}
+
+.test-button:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 4px;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.comparison-card {
+  box-shadow: none;
+}
+
+.comparison-card--active {
+  border-color: #8cc9c1;
+  box-shadow: inset 0 0 0 1px #8cc9c1;
+}
+
+.comparison-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+  color: var(--ink);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+}
+
+.dot-amber {
+  background: var(--amber);
+}
+
+.dot-teal {
+  background: var(--teal);
+}
+
+.comparison-card p {
+  min-height: 2.2rem;
+  margin-bottom: 1.1rem;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.preview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 5.5rem;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+  border-radius: 0.3rem;
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.78rem;
+}
+
+.preview-locked {
+  color: var(--amber);
+  background: var(--amber-soft);
+}
+
+.preview-open {
+  color: var(--teal-dark);
+  background: var(--teal-soft);
+}
+
+.comparison-card small {
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2rem 0 3rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.footer p {
+  max-width: 34rem;
+}
+
+.footer-links {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+}
+
+a {
+  color: var(--teal-dark);
+}
+
+a:hover {
+  color: var(--amber);
+}
+
+@media (max-width: 700px) {
+  main {
+    width: min(100% - 1.5rem, 42rem);
+  }
+
+  .hero {
+    padding: 4.5rem 0 3.5rem;
+  }
+
+  .section {
+    margin-bottom: 4.5rem;
+  }
+
+  .section-heading,
+  .control-panel,
+  .footer {
+    display: block;
+  }
+
+  .section-note {
+    margin-top: 0.8rem;
+    text-align: left;
+  }
+
+  .control-panel {
+    padding: 1rem;
+  }
+
+  .switch {
+    margin-top: 1rem;
+  }
+
+  .chart-list,
+  .comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-links {
+    margin-top: 1.5rem;
+  }
+}

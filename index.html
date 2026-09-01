@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A dependency-free prototype for resizing Reuters Datawrapper iframes with one global postMessage listener.">
+    <title>One listener, every chart</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+  </head>
+  <body class="resize-demo">
+    <main>
+      <header class="hero">
+        <p class="eyebrow">Arena &times; Reuters</p>
+        <h1>One listener.<br><span>Every chart.</span></h1>
+        <p class="lede">A small, resilient pattern for keeping Reuters-hosted Datawrapper embeds the height they actually need - even when a live-blog card arrives late.</p>
+        <div class="hero-meta" aria-label="Demo facts">
+          <span><strong id="frame-count">1</strong> frames tracked</span>
+          <span><strong id="resize-count">0</strong> accepted resizes</span>
+          <span>Origin locked to <code>reuters.com</code></span>
+        </div>
+      </header>
+
+      <section class="section" aria-labelledby="demo-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Live demo</p>
+            <h2 id="demo-heading">Charts can arrive in any order</h2>
+          </div>
+          <p class="section-note">The second card appears after load, just like a new Arena item.</p>
+        </div>
+
+        <div class="control-panel">
+          <div>
+            <p class="control-label">Arena page furniture</p>
+            <p class="control-copy">Let measured Datawrapper heights shrink below the usual 450px minimum.</p>
+          </div>
+          <label class="switch">
+            <input id="shrink-toggle" type="checkbox" checked>
+            <span class="switch-track" aria-hidden="true"><span></span></span>
+            <span class="switch-text">Scoped override on</span>
+          </label>
+        </div>
+
+        <div id="chart-list" class="chart-list">
+          <article class="chart-card" data-chart-name="Shein markets">
+            <div class="card-topline">
+              <span class="card-number">01</span>
+              <span class="card-status" data-field="status">Waiting for height</span>
+            </div>
+            <h3>Shein market snapshot</h3>
+            <p class="card-description">Reuters &middot; markets graphic &middot; initial card</p>
+            <div class="frame-shell">
+              <iframe
+                class="datawrapper-frame allow-received-height"
+                title="Reuters Shein market snapshot"
+                src="https://www.reuters.com/graphics/MARKETS-AUTOMATED/SHEIN-20260901/znvnowrampl/media-embed.html"
+              ></iframe>
+            </div>
+            <dl class="metrics" aria-live="polite">
+              <div><dt>Initial</dt><dd data-field="initial">-</dd></div>
+              <div><dt>Current</dt><dd data-field="current">-</dd></div>
+              <div><dt>Resizes</dt><dd data-field="resizes">0</dd></div>
+            </dl>
+            <button class="test-button" type="button" data-test-message>Send sample height</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="section comparison-section" aria-labelledby="comparison-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">The CSS detail</p>
+            <h2 id="comparison-heading">A minimum can become a ceiling</h2>
+          </div>
+          <p class="section-note">The open preview shows the latest accepted height.</p>
+        </div>
+        <div class="comparison-grid">
+          <div class="comparison-card">
+            <div class="comparison-label"><span class="dot dot-amber"></span>Arena default</div>
+            <p><code>min-height: 450px !important</code></p>
+            <div class="preview preview-locked"><span data-preview="locked">450px minimum</span></div>
+            <small>Short charts stay taller than their content.</small>
+          </div>
+          <div class="comparison-card comparison-card--active">
+            <div class="comparison-label"><span class="dot dot-teal"></span>Scoped override</div>
+            <p><code>min-height: 0 !important</code></p>
+            <div class="preview preview-open"><span data-preview="open">Waiting for message</span></div>
+            <small>The received height can control the iframe.</small>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p><strong>How to read this:</strong> the listener is installed once in the parent page. It matches the sending window, not a chart ID, then updates only that iframe.</p>
+        <p class="footer-links"><a href="README.md">Read the integration notes</a> <span aria-hidden="true">&nearr;</span></p>
+      </footer>
+    </main>
+  </body>
+</html>
