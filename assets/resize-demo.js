@@ -3,11 +3,11 @@
 
   const ALLOWED_MESSAGE_ORIGINS = new Set([
     "https://www.reuters.com",
-    "https://datawrapper.dwcdn.net",
   ]);
 
+  const demoFrames = new WeakMap();
+
   const injectedChart = {
-    name: "brv",
     title: "Reuters BRV chart",
     src: "https://www.reuters.com/graphics/BRV-BRV/mopazegqrva/media-embed.html",
   };
@@ -45,19 +45,19 @@
   }
 
   /**
-   * Finds the demo iframe that sent a postMessage event.
+   * Finds the iframe that sent a postMessage event.
    *
    * Args:
    *   source: The event source supplied by a MessageEvent.
    *
    * Returns:
-   *   The matching iframe element, or null when the sender is not a demo frame.
+   *   The matching iframe element, or null when the sender is not an iframe.
    *
    * Example:
    *   findFrameBySource(frame.contentWindow) === frame
    */
   function findFrameBySource(source) {
-    const frames = document.querySelectorAll("iframe[data-datawrapper-demo]");
+    const frames = document.querySelectorAll("iframe");
     for (const frame of frames) {
       if (frame.contentWindow === source) {
         return frame;
@@ -68,7 +68,7 @@
   }
 
   /**
-   * Updates a card's visible current height.
+   * Applies a validated height and updates an optional demo status.
    *
    * Args:
    *   frame: The iframe that received a resize message.
@@ -81,16 +81,39 @@
    *   updateFrameHeight(frame, 320)
    */
   function updateFrameHeight(frame, height) {
-    const startingHeight = frame.dataset.startingHeight || frame.getAttribute("height") || "450";
-    frame.dataset.startingHeight = startingHeight;
+    frame.style.setProperty("min-height", "0px", "important");
     frame.height = String(height);
     frame.style.height = `${height}px`;
 
-    const name = frame.dataset.frameName;
-    const status = document.querySelector(`[data-frame-status="${name}"]`);
-    if (status) {
-      status.textContent = `Starting height: ${startingHeight}px. Current height: ${height}px.`;
+    const demoFrame = demoFrames.get(frame);
+    if (demoFrame) {
+      demoFrame.status.textContent =
+        `Starting height: ${demoFrame.startingHeight}px. Current height: ${height}px.`;
     }
+  }
+
+  /**
+   * Tracks a frame only for this page's status display.
+   *
+   * Args:
+   *   frame: The demo iframe to track.
+   *   status: The status element paired with the iframe.
+   *
+   * Returns:
+   *   Nothing.
+   *
+   * Example:
+   *   trackDemoFrame(frame, status)
+   */
+  function trackDemoFrame(frame, status) {
+    if (!frame || !status) {
+      return;
+    }
+
+    demoFrames.set(frame, {
+      startingHeight: frame.getAttribute("height") || "450",
+      status,
+    });
   }
 
   // Register immediately, before either iframe has a chance to finish loading.
@@ -136,23 +159,23 @@
     card.innerHTML = `
       <div class="card-label">
         <h2>Arena-style delayed card</h2>
-        <p class="frame-status" data-frame-status="${injectedChart.name}" aria-live="polite">
+        <p class="frame-status" aria-live="polite">
           Starting height: 450px. Current height: 450px.
         </p>
       </div>
       <iframe
-        class="chart-frame"
-        data-datawrapper-demo
-        data-frame-name="${injectedChart.name}"
+        id="datawrapper-chart-brv"
+        data-external="1"
         title="${injectedChart.title}"
         src="${injectedChart.src}"
         width="100%"
         height="450"
-        loading="lazy"
+        style="min-height: 450px !important"
       ></iframe>
     `;
 
     anchor.append(card);
+    trackDemoFrame(card.querySelector("iframe"), card.querySelector(".frame-status"));
     insertionStatus.textContent =
       "The second card was inserted after page load. The same listener now handles it.";
   }
@@ -178,9 +201,10 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    for (const frame of document.querySelectorAll("iframe[data-datawrapper-demo]")) {
-      frame.dataset.startingHeight = frame.getAttribute("height") || "450";
-    }
+    trackDemoFrame(
+      document.querySelector(".arena-card iframe"),
+      document.querySelector("[data-frame-status=\"shein\"]"),
+    );
 
     for (const button of document.querySelectorAll("[data-width]")) {
       button.addEventListener("click", () => setDemoWidth(button.dataset.width));

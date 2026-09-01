@@ -124,19 +124,9 @@ body.viewport-narrow .demo-stage {
   font-size: 0.95rem;
 }
 
-/* This mirrors the broad minimum-height rule applied by Arena page furniture. */
 .arena-card iframe {
   display: block;
-  min-height: 450px !important;
   border: 0;
-}
-
-/*
- * The prototype owns this wrapper. Its more specific rule lets Datawrapper
- * reduce an iframe after it reports a smaller height.
- */
-#datawrapper-resize-demo .chart-frame {
-  min-height: 1px !important;
 }
 
 code {

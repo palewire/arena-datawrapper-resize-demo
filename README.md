@@ -22,9 +22,10 @@ or runtime dependency.
 - The first Reuters iframe is in the HTML. The second is inserted after a
   short delay, mirroring Arena adding a live-blog card after the initial page
   load.
-- The listener finds the sender with
+- The listener scans every iframe and finds the sender with
   `iframe.contentWindow === event.source`, then changes only that iframe's
-  height.
+  height. No chart ID, custom class, or custom data attribute is needed for
+  resizing.
 - Each card shows its starting height (450px) and current reported height.
 - The **Narrow card** and **Wide card** controls make responsive testing
   easier. Browser resizing works too.
@@ -36,27 +37,28 @@ The two live embeds are:
 
 ## Arena page-furniture installation
 
-Place the CSS correction and listener from `assets/styles.css` and
-`assets/resize-demo.js` in Arena page furniture, where they load once per
-page. Keep individual chart cards script-free:
+Place the listener from `assets/resize-demo.js` in Arena page furniture, where
+it loads once per page. Keep individual chart cards script-free and use
+Arena's normal iframe markup:
 
 ```html
 <iframe
-  class="chart-frame"
-  data-datawrapper-demo
-  data-frame-name="descriptive-name"
+  id="datawrapper-chart-..."
+  data-external="1"
   title="Chart description"
   src="https://www.reuters.com/graphics/.../media-embed.html"
   width="100%"
   height="450"
+  style="min-height: 450px !important"
 ></iframe>
 ```
 
-Arena's broad `min-height: 450px !important` prevents a chart from shrinking.
-The prototype intentionally mirrors that rule, then corrects it only under
-`#datawrapper-resize-demo .chart-frame`. In production, replace that wrapper
-with a similarly narrow, page-furniture-owned selector. Do not remove
-Arena's rule globally.
+Arena applies `min-height: 450px !important` inline on these iframes. A
+stylesheet selector, no matter how specific, cannot override an inline
+important declaration. After the listener has matched an approved Reuters
+sender window and accepted a valid height, it replaces that one frame's inline
+minimum with `frame.style.setProperty("min-height", "0px", "important")`.
+This correction is limited to the exact frame that sent the accepted message.
 
 ## Why match the sender window
 
@@ -70,24 +72,22 @@ initial iframe and later-injected cards without depending on either ID.
 
 The listener ignores every message unless all of these conditions are true:
 
-1. Its origin is exactly `https://www.reuters.com` or
-   `https://datawrapper.dwcdn.net`.
+1. Its origin is exactly `https://www.reuters.com`.
 2. The message is an object containing an object-shaped
    `datawrapper-height` payload.
-3. The event source is the `contentWindow` of an iframe marked for this demo.
+3. The event source is the `contentWindow` of an iframe on the page.
 4. The reported height is a finite positive number.
 
 Malformed, unrelated, and unapproved-origin messages do nothing.
 
 ## Prototype limits and production follow-ups
 
-This prototype trusts only the two origins needed for these Reuters embeds and
-uses a simple page-level selector. Before production use, confirm the actual
-production sender origins in browser tooling; add only exact origins that are
-required. Give the page-furniture selector a stable scope shared by every
-eligible chart card, test with Arena's real delayed inserts and content
-updates, and add site-level browser tests where the host project supports
-them.
+This prototype trusts only the Reuters origin used by these embeds and scans
+the page's iframes only after that origin and message shape have been checked.
+Before production use, confirm the actual production sender origin in browser
+tooling; add another exact origin only when a demonstrated iframe needs it.
+Test with Arena's real delayed inserts and content updates, and add site-level
+browser tests where the host project supports them.
 
 ## Validation and deployment
 

@@ -39,14 +39,13 @@
             </p>
           </div>
           <iframe
-            class="chart-frame"
-            data-datawrapper-demo
-            data-frame-name="shein"
+            id="datawrapper-chart-shein"
+            data-external="1"
             title="Reuters chart about Shein"
             src="https://www.reuters.com/graphics/MARKETS-AUTOMATED/SHEIN-20260901/znvnowrampl/media-embed.html"
             width="100%"
             height="450"
-            loading="lazy"
+            style="min-height: 450px !important"
           ></iframe>
         </article>
 
@@ -56,10 +55,9 @@
       <aside class="note">
         <h2>What this demonstrates</h2>
         <p>
-          Arena can force embeds to <code>min-height: 450px !important</code>.
-          This demo keeps that rule, then applies a more specific correction
-          only inside this prototype so charts can shrink when Datawrapper
-          reports a smaller height.
+          Arena can set <code>min-height: 450px !important</code> directly on
+          an iframe. This demo keeps that inline rule, then replaces it only
+          after an approved Reuters frame reports a valid new height.
         </p>
         <p id="insertion-status">The second card will be inserted shortly.</p>
       </aside>
