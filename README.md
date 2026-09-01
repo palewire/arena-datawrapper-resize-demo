@@ -93,7 +93,7 @@ them.
 
 The GitHub Actions workflow runs `node --check assets/resize-demo.js`,
 `node --test tests/resize-demo.test.mjs`, and confirms the required static
-files on pull requests and pushes. Pushes to `main` and this prototype branch
-deploy through GitHub Pages. The first deployment requires the repository's
+files on pull requests and pushes. Pushes to `main` deploy through GitHub
+Pages. The first deployment requires the repository's
 Pages source to be set to **GitHub Actions**; the workflow is prepared for
 that setting.
